@@ -1,0 +1,121 @@
+DROP TABLE IF EXISTS Distinction;
+DROP TABLE IF EXISTS Role;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Membership_ActivitiesEvents;
+DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS MembershipType;
+DROP TABLE IF EXISTS Facility;
+
+
+CREATE TABLE Role(
+  RoleID INT NOT NULL,
+  RoleDescription VARCHAR(50) NOT NULL,
+  CONSTRAINT PK_Role PRIMARY KEY CLUSTERED (RoleID ASC)
+  );
+
+INSERT INTO Role(RoleID, RoleDescription) VALUES
+(1, 'ADMIN'),
+(2, 'MEMBER');
+
+CREATE TABLE MembershipType(
+  MembershipTypeName VARCHAR(50) NOT NULL,
+ PRIMARY KEY CLUSTERED (MembershipTypeName ASC)
+  );
+
+
+INSERT INTO MembershipType(MembershipTypeName) VALUES
+(''),
+('Ordinary Member/Overseas Member'),
+('Life Membership'),
+('Junior Member');
+
+
+CREATE TABLE Users (
+    Nric     VARCHAR(9)     NOT NULL,
+    FullName VARCHAR (50)   NOT NULL,
+    Email    VARCHAR (50)   NOT NULL,
+	RoleID   INT      DEFAULT (2)   NULL,
+	MembershipType  VARCHAR(50) NULL,
+	Address  VARCHAR(50)   NOT NULL,
+	City     VARCHAR(50)   NOT NULL,
+	StateProvinceRegion  VARCHAR(50)  NOT NULL,
+	ZipPostalCode  INT NULL,
+	Country  VARCHAR(50)  NOT NULL,
+	Phone    VARCHAR(50)   NOT NULL,
+	MembershipNo  INT IDENTITY (1, 1) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+	Gender   VARCHAR(6)  NOT NULL,
+    MembershipPaymentStatus BIT  NULL,
+    PRIMARY KEY CLUSTERED (MembershipNo ASC),
+    CONSTRAINT FK_MembershipType FOREIGN KEY(MembershipType) REFERENCES MembershipType (MembershipTypeName),
+	CONSTRAINT FK_Users_ToRole FOREIGN KEY (RoleID) REFERENCES Role (RoleID)
+);
+
+SET IDENTITY_INSERT Users ON
+INSERT INTO Users(MembershipNo, FullName, Email, RoleID, MembershipType, Address, City, StateProvinceRegion, ZipPostalCode, Country, Phone, Nric, Password, Gender, MembershipPaymentStatus) VALUES
+(1, 'Vincent Ng', 'vincentng@gmail.com', 1, '', 'Selegie Arts Centre, 30 Selegie Road', 'Singapore', 'Singapore', 188351, 'Singapore', '63343361', 'S1234567E', HASHBYTES('SHA1', 'password1'), 'Male', ''),
+(2, 'Barack Obama', 'obama@gmail.com', 2, 'Junior Member', 'Chicago', 'USA', 'USA', 188351, 'USA', '63343361', 'S1234567E', HASHBYTES('SHA1', 'password2'), 'Male', '')
+SET IDENTITY_INSERT Users OFF
+
+
+CREATE TABLE Distinction (
+    DistinctionID   INT IDENTITY (1, 1) NOT NULL,
+    MembershipNo INT   NOT NULL,
+    Price FLOAT(53) NOT NULL,
+	DistinctionLvl  VARCHAR(50)  NOT NULL,
+	Message  VARCHAR(200)  NOT NULL,
+	DateApplied  DATE  NOT NULL,
+    PRIMARY KEY CLUSTERED (DistinctionID ASC),
+	CONSTRAINT FK_Distinction_ToUsers FOREIGN KEY (MembershipNo) REFERENCES Users (MembershipNo)
+);
+
+CREATE TABLE Facility(
+  FacilityID INT IDENTITY(1,1) NOT NULL,
+  Name     VARCHAR(30)  NOT NULL,
+  Availability  BIT  NULL,
+  Description  VARCHAR(100)  NULL,
+  PRIMARY KEY CLUSTERED (FacilityID ASC)
+);
+
+SET IDENTITY_INSERT Facility ON
+INSERT INTO Facility(FacilityID, Name, Availability, Description)  VALUES
+(0, 'Non-Facility', '1', 'External Location.'),
+(1, 'Room1A', '0', 'Room equiped with fully functioning air-condition'),
+(2, 'Room1B', '1', 'Room equiped with fully functioning air-condition'),
+(3, 'Room2D', '0', 'Room equiped with lastest wide screen carter to more people')
+SET IDENTITY_INSERT Facility OFF
+
+CREATE TABLE Event(
+  EventID INT IDENTITY(0001,1) NOT NULL,
+  EventName VARCHAR(200) NOT NULL,
+  StartDate DATE NOT NULL,
+  EndDate DATE NOT NULL,
+  Price FLOAT(53) NOT NULL,
+  Venue VARCHAR(300) NULL,
+  Description VARCHAR(300) NOT NULL,
+  EventType  VARCHAR(30) NOT NULL,
+  PicFile    VARCHAR(30) NULL,
+  FacilityID INT NOT NULL,	
+  CONSTRAINT PK_Event PRIMARY KEY CLUSTERED (EventID ASC),
+  CONSTRAINT FK_Facility_ToEvent FOREIGN KEY (FacilityID) REFERENCES Facility (FacilityID)
+);
+
+SET IDENTITY_INSERT Event ON
+INSERT INTO Event(EventID, EventName, StartDate, EndDate, Price, Venue, Description, EventType, PicFile, FacilityID) VALUES
+(1, 'PSS 3rd Annual Members Fund-Raising Dinner 2018', '2018-08-08', '2018-08-08', 0, 'Selegie Arts Centre, 30 Selegie Road', 'PSS 3rd Annual Members Fund-Raising Dinner 2018', 'Event', 'annual-dinner.jpg', '0'),
+(2, 'Artist Talk - "Working together with People" by Alecia Neo', '2018-04-08', '2018-04-09', 20, 'Selegie Arts Centre, 30 Selegie Road', 'Artist Talk - "Working together with People" by Alecia Neo', 'Workshop', 'defender.png', '0')
+SET IDENTITY_INSERT Event OFF
+
+CREATE TABLE Membership_ActivitiesEvents(
+  MembersHaveEvent INT IDENTITY(1,1) NOT NULL,
+  MembershipNo INT NOT NULL,
+  EventID  INT  NOT NULL,
+  CONSTRAINT PK_Membership_ActivitiesEvents PRIMARY KEY CLUSTERED (MembersHaveEvent  ASC),
+  CONSTRAINT FK_Membership_ActivitiesEvents_ToUser FOREIGN KEY (MembershipNo) REFERENCES Users (MembershipNo),
+  CONSTRAINT FK_Membership_ActivitiesEvents_ToEvent FOREIGN KEY (EventID) REFERENCES Event (EventID),
+);
+
+
+
+
+
