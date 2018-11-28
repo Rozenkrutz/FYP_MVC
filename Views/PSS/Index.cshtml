@@ -1,0 +1,71 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <style>
+        
+        body {
+            background: #eee;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: 400;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+            h3 i {
+                color: #444;
+            }
+
+      
+    </style>
+
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() >= 700) {
+                $("#return-to-top").fadeIn(200);
+            } else {
+                $("#return-to-top").fadeOut(200);
+            }
+        });
+        $("a[href='#top']").click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 50000);
+        });
+        setTimeout(function () {
+            $('#content2').show();
+            AOS.init({
+                duration: 600
+            })
+        }, 1300);
+    </script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+</head>
+
+<body>
+    <div id="content2" style="display:none">
+        
+        <br /><br />
+
+        <div id="ThisDivIsEmptyWhiteSpace" style="height:30px">Hello</div>
+
+        <div id="ThisDivIsEmptyWhiteSpace" style="height:70px">Test2</div>
+
+        <p style="text-align:center;color:dimgray;font-size:16px">Starhub Admin Panel</p>
+        <p style="text-align:center;color:dimgray;font-size:12px">COPYRIGHT &#169; STARHUB PTE LTD.</p>
+
+        <div id="ThisDivIsEmptyWhiteSpace" style="height:20px"></div>
+    </div>
+</body>
+</html>

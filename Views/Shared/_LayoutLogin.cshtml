@@ -1,0 +1,192 @@
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Starhub Admin Login</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    
+
+    <style>
+        .input-group-addon {
+            cursor: pointer;
+        }
+
+        #BsDateTimePicker {
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $('#BsDateTimePicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
+
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 180px;
+            position: absolute;
+            z-index: 1;
+            top: 60px;
+            left: 0;
+            background-color: white;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+            .sidenav a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                color: dimgray;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: black;
+                }
+
+        .shift {
+            margin-left: 190px;
+            padding: 0px 10px;
+            margin-top: 30px;
+        }
+
+    </style>
+    <script src="~/lib/jquery-validation/src/core.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-sm-1" style="top:10px">
+            <a asp-controller="PSS" asp-action="MemberIndex" class="nav navbar-nav navbar-left "><img src="~/images/psslogo.jpg" style="width:100%"></a>
+        </div>
+        <nav role="navigation" style="background-color:white">
+            <div class="container">
+                <ul class="nav navbar-nav navbar-left">
+
+                    <li>
+                        <a style="color:dimgray;font-size:15px" asp-controller="PSS" asp-action="MemberIndex">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("2"))
+                    {
+                        <li>
+                            <a style="color:dimgray; font-size:15px">
+                                Test Panel1
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="PSS" asp-action="Distinction" asp-route-id="@User.Identity.Name" style="color:dimgray; font-size:15px">
+                                Test Panel2
+                            </a>
+                        </li>
+                    }
+
+                    
+                </ul>
+
+                <div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <p class="navbar-text" style="color:dimgray;font-size:15px">Today's date is @ViewData["today'sDate"]</p>
+                        </li>
+                        <li class="dropdown active">
+                            <p class="navbar-text dropdown-toggle" style="color:dimgray;font-size:15px" data-toggle="dropdown">
+                                Welcome @User.Identity.Name <span class="caret" /><br />
+                            </p>
+                            <ul class="dropdown-menu active">
+                                <li><a asp-controller="PSS" asp-action="EditProfile" asp-route-id="@User.Identity.Name" style="font-size:15px; color:dimgray">My Account <span class="glyphicon glyphicon-edit"></span></a></li>
+                                <li class="divider" role="separator" />
+                                <li>
+                                    <a style="font-size:15px; color:dimgray" asp-controller="Account" asp-action="Logoff">
+                                        LOGOUT <span class="glyphicon glyphicon-log-out"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        @if (User.IsInRole("1"))
+        {
+            <div class="sidenav">
+                <a asp-controller="PSS" asp-action="ViewDistinction">View Distinction</a>
+                <a asp-controller="PSS" asp-action="ViewMemberUser">View Member</a>
+                <a asp-controller="PSS" asp-action="ViewAdminUser">View Admin</a>
+                <a asp-controller="PSS" asp-action="CreateAdmin">Create Admin User</a>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div style="z-index:99">
+            <div class="col-sm-1" style="top:10px">
+                <a href="http://localhost:53011/PSS" class="nav navbar-nav navbar-left "></a>
+            </div>
+            <nav role="navigation" style="background-color:white">
+                <div class="container">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a style="color:dimgray;font-size:15px" href="http://localhost:53011/PSS">
+                                <span class="glyphicon glyphicon-home"></span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a style="color:dimgray; font-size:15px">
+                                Test Panel1
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Login" style="color:dimgray; font-size:15px">
+                                Test Panel2
+                            </a>
+                        </li>
+
+                        
+                    </ul>
+
+                    <div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a style="font-size:15px; color:dimgray" asp-controller="Account" asp-action="Login">
+                                    LOGIN
+                                    <span class="glyphicon glyphicon-log-in"></span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a style="font-size:15px; color:dimgray" asp-controller="PSS" asp-action="SignUp">
+                                    SIGN UP
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    }
+
+    @RenderBody()
+</body>
+
+</html>

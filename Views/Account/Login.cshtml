@@ -1,0 +1,101 @@
+﻿@model LoginUser
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    string msg = ViewData["Message"] as string;
+}
+<head>
+    <style>
+
+        .square {
+            margin: auto;
+            width: 500px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+            padding: 40px 40px 400px;
+            margin-top: 60px;
+            background: linear-gradient(top, #ffffff 0%, #ffffff 100%);
+            background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 100%);
+        }       
+    </style>
+</head>
+
+@*<form class="form-horizontal" method="post">
+
+        <div class="col-sm-12">
+            @if (msg != null)
+            {
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-4">
+                        <div class="alert alert-danger">
+                            <strong>@msg</strong>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div style="text-align:center;">
+                <h2 class="form-signin-heading">Please Sign In</h2>
+            </div>
+            <div class="col-sm-offset-4 col-sm-4">
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label">Email :</label>
+                    <input asp-for="UserId" class="form-control" placeholder="Enter your Email" />
+                    <div class="has-error">
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Password :</label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter your Password" />
+                    <div class="has-error">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div style="text-align:center;">
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign In" />
+                </div>
+            </div>
+        </div>
+</form>*@
+ 
+<body id="back" style="background-image:url('/images/green_nyc_neighborhood.jpg'); background-size:cover; background-repeat:no-repeat; margin:0; padding:0"> 
+    <div class="square">
+        <form class="form-horizontal" method="post">
+            <div class="col-sm-12">
+                <div style="text-align:center">
+                    <h2 class="form-signin-heading">Please Sign In</h2>
+                </div>
+                @if (msg != null)
+            {
+                    <br />
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger">
+                                <strong style="text-align:center">@msg</strong>
+                            </div>
+                        </div>
+                    </div>
+                }              
+              
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label">Email :</label>
+                        <input asp-for="UserId" class="form-control" placeholder="Enter your Email" />
+                        <div class="has-error">
+                            <span asp-validation-for="UserId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password :</label>
+                        <input asp-for="Password" class="form-control" placeholder="Enter your Password" />
+                        <div class="has-error">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div style="text-align:center;">
+                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign In" />
+                    </div>   
+            </div>
+        </form>
+    </div>
+</body>

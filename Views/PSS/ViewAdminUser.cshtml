@@ -1,0 +1,75 @@
+@model List<Users>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function ConfirmDelete() {
+        if (confirm("Are you sure you want to delete?") == false) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="shift">
+        <h2 style="color:dimgray">List of Admin Users</h2><br />
+
+        <span style="color:red; left:80px">@TempData["MsgAdmin"]</span>
+
+        <form class="form-horizontal" asp-action="searchAdmin">
+            <div class="col-sm-1">
+                <label class="control-label">Search :</label>
+            </div>
+            <div class="col-sm-4">
+                <input class="form-control" name="search" id="search" placeholder="Type ID or Name" />
+            </div>
+            <div class="col-sm-4 col-sm-1">
+                <input type="submit" class="btn btn-default" value="Search" />
+            </div>
+        </form>
+
+        <form action="/PSS/ViewAdminUser">
+            <input type="submit" class="btn btn-default" value="Cancel Search" />
+        </form>
+
+        <div id="EmptyWhiteSpace" style="height:50px"></div>
+
+        <table class="table table-bordered table-condensed table-hover table-striped">
+            <tr>
+                <th style="width:150px">Admin's Name</th>
+                <th style="width:120px">Admin's ID</th>
+                <th style="width:100px">Email</th>
+                <th style="width:100px">Delete</th>
+            </tr>
+            @foreach (Users u in Model)
+            {
+                <tr>
+                    <td><a asp-action="UpdateAdminUser" asp-route-id="@u.MembershipNo">@u.FullName</a></td>
+                    <td>@u.MembershipNo</td>
+                    <td>@u.Email</td>
+                    <td>
+                        <a asp-action="UpdateAdminUser" asp-route-id="@u.MembershipNo" asp-route-isDelete="true" onclick="return ConfirmDelete()">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div>
+            <button onclick="topFunction()" id="pageTop">Page Top</button>
+        </div>
+    </div>
+</body>
+</html>

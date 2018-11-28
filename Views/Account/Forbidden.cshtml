@@ -1,0 +1,33 @@
+
+@{
+    Layout = ViewData["TheLayout"] as string;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Forbidden</title>
+</head>
+<body>
+    <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-2">
+            <img src="~/images/no_entry.png" style="width:90%;height:90%" />
+        </div>
+        @*<span style="color:red">
+            <h2>Access Restricted!!</h2>
+            <h3>**Warning** You do not have the permissions to view this page!!</h3>
+        </span>*@
+        <h2>Unauthorized Access</h2>
+        <h4>You have attempted to access a page that you are not authorized to view.</h4>
+        <h4>If you have any questions, please contact the site administrator.</h4>
+    </div>
+</body>
+</html>
+
+@*If an registered user tries to hack into Coordinator page through URL, with
+the motive of, say Changing payment details from "Not Paid" to "Paid" or
+"Absent" to "Present", etc. The Coordinator webpage will ensure
+that only users with the appropriate role can access
+with the implement of Role based Authorization.*@
